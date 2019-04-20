@@ -1,0 +1,11 @@
+{
+  "name": "avolitestitan",
+  "version": "1.0.0",
+  "description": "module for controlling avolites titan desks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nijs Jonas",
+  "license": "ISC"
+}
