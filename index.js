@@ -52,7 +52,7 @@ instance.prototype.config_fields = function () {
 			type: 'textinput',
 			id: 'IP',
 			label: 'Desk IP',
-			regex: self.REGEX_IP
+			regex: self.REGEX_IP,
 			width: 12
 		}
 	]
