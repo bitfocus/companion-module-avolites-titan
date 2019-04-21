@@ -206,7 +206,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'cuelistGo') {
+	else if (action.action == 'cuelistGo') {
 		if (self.config.IP !== undefined) {
 			var cuelistaction = "Play";
 			if (action.options.cuelistaction == '1')
@@ -224,7 +224,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'playbackFlash') {
+	else if (action.action == 'playbackFlash') {
 		if (self.config.IP !== undefined) {
 			var percentage = "1";
 			if (action.options.playbackaction == '1')
@@ -242,7 +242,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'playbackSwop') {
+	else if (action.action == 'playbackSwop') {
 		if (self.config.IP !== undefined) {
 			var playbackaction = "SwopPlayback";
 			if (action.options.playbackaction == '1')
@@ -260,7 +260,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'cuelistGoto') {
+	else if (action.action == 'cuelistGoto') {
 		if (self.config.IP !== undefined) {
 			var cmd = "http://" + self.config.IP + ":4430/titan/script/2/CueLists/SetNextCue?handle_userNumber=" + action.options.un + "&stepNumber=" + action.options.cn;
 			self.system.emit('rest_get', cmd, function (err, result) {
