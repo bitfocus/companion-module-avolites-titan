@@ -52,6 +52,7 @@ instance.prototype.config_fields = function () {
 			type: 'textinput',
 			id: 'IP',
 			label: 'Desk IP',
+			regex: self.REGEX_IP
 			width: 12
 		}
 	]
@@ -89,7 +90,7 @@ instance.prototype.actions = function(system) {
 	}
 
 	self.setActions({
-		'playback_at_percentage': {
+		'playbackAtPercentage': {
 			label: 'Playback @ Percentage',
 			options: [
 				{
@@ -101,14 +102,14 @@ instance.prototype.actions = function(system) {
 				},
 				{
 					type: 'textinput',
-					label: 'Percentage',
-					id: 'percentage (0->100)',
+					label: 'Percentage (0->100)',
+					id: 'percentage',
 					default: '1',
 					regex:   self.REGEX_NUMBER
 				}
 			]
 		},
-		'playback_flash': {
+		'playbackFlash': {
 			label: 'Playback Flash',
 			options: [
 				{
@@ -127,7 +128,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'playback_swop': {
+		'playbackSwop': {
 			label: 'Playback Swop',
 			options: [
 				{
@@ -146,7 +147,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'Cuelist_go': {
+		'cuelistGo': {
 			label: 'Cuelist GO / BACK',
 			options: [
 				{
@@ -165,7 +166,7 @@ instance.prototype.actions = function(system) {
 				}
 			]
 		},
-		'Cuelist_goto': {
+		'cuelistGoto': {
 			label: 'Cuelist Go to cue',
 			options: [
 				{
@@ -190,7 +191,7 @@ instance.prototype.actions = function(system) {
 instance.prototype.action = function(action) {
 	var self = this;
 	var cmd;
-	if (action.action == 'playback_at_percentage') {
+	if (action.action == 'playbackAtPercentage') {
 		if (self.config.IP !== undefined) {
 			var percentage = action.options.percentage;
 			percentage = percentage/100;
@@ -205,7 +206,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'Cuelist_go') {
+	if (action.action == 'cuelistGo') {
 		if (self.config.IP !== undefined) {
 			var cuelistaction = "Play";
 			if (action.options.cuelistaction == '1')
@@ -223,7 +224,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'playback_flash') {
+	if (action.action == 'playbackFlash') {
 		if (self.config.IP !== undefined) {
 			var percentage = "1";
 			if (action.options.playbackaction == '1')
@@ -241,7 +242,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'playback_swop') {
+	if (action.action == 'playbackSwop') {
 		if (self.config.IP !== undefined) {
 			var playbackaction = "SwopPlayback";
 			if (action.options.playbackaction == '1')
@@ -259,7 +260,7 @@ instance.prototype.action = function(action) {
 			});
 		}
 	}
-	if (action.action == 'Cuelist_goto') {
+	if (action.action == 'cuelistGoto') {
 		if (self.config.IP !== undefined) {
 			var cmd = "http://" + self.config.IP + ":4430/titan/script/2/CueLists/SetNextCue?handle_userNumber=" + action.options.un + "&stepNumber=" + action.options.cn;
 			self.system.emit('rest_get', cmd, function (err, result) {
