@@ -1,7 +1,10 @@
 var instance_skel = require('../../instance_skel');
 var debug;
 var log;
-
+var imagelist = [];
+var request = require('request').defaults({ encoding: null });
+var uploadimg = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
+var ipadr;
 function instance(system, id, config) {
 	var self = this;
 
@@ -9,10 +12,9 @@ function instance(system, id, config) {
 	instance_skel.apply(this, arguments);
 
 	self.actions(); // export actions
-
+	self.init_feedbacks();
 	return self;
 }
-
 instance.prototype.updateConfig = function(config) {
 	var self = this;
 	self.config = config;
@@ -26,6 +28,7 @@ instance.prototype.updateConfig = function(config) {
 			else {
 				self.status(self.STATUS_OK);
 			}
+			ipadr = self.config.IP;
 	});	}
 }
 // Choices
@@ -57,14 +60,16 @@ instance.prototype.config_fields = function () {
 		}
 	]
 }
+
 // Startup test
 instance.prototype.init = function() {
 	var self = this;
+	ipadr = self.config.IP;
 	debug = self.debug;
 	log = self.log;
 	self.status(self.STATUS_ERROR);
 	if (self.config.IP !== undefined) {
-		var cmd = "http://" + self.config.IP + ":4430/titan/get/System/SoftwareVersion";
+		var cmd = "http://" + ipadr + ":4430/titan/get/System/SoftwareVersion";
 		self.system.emit('rest_get', cmd, function (err, result) {
 			if (err !== null) {
 				self.status(self.STATUS_ERROR, result.error.code);
@@ -72,7 +77,9 @@ instance.prototype.init = function() {
 			else {
 				self.status(self.STATUS_OK);
 			}
-		});	}
+		});
+	}
+	self.checkFeedbacks()
 }
 
 // When module gets deleted
@@ -187,10 +194,10 @@ instance.prototype.actions = function(system) {
 		}
 	});
 }
-
 instance.prototype.action = function(action) {
 	var self = this;
 	var cmd;
+	self.checkFeedbacks();
 	if (action.action == 'playbackAtPercentage') {
 		if (self.config.IP !== undefined) {
 			var percentage = action.options.percentage;
@@ -241,6 +248,7 @@ instance.prototype.action = function(action) {
 				}
 			});
 		}
+		
 	}
 	else if (action.action == 'playbackSwop') {
 		if (self.config.IP !== undefined) {
@@ -282,6 +290,55 @@ instance.prototype.action = function(action) {
 		}
 	}
 }
-
+instance.prototype.init_feedbacks = function() {
+	var self = this;
+	var feedbacks = {};
+	feedbacks['image'] = {
+		label: 'Get picture legend of playback',
+		description: 'Updates the keys image to the image on your console',
+		options: [
+			{
+					type: 'textinput',
+					label: 'UserNumber',
+					id: 'un',
+					default: '1',
+					regex:   self.REGEX_NUMBER
+			},
+		]
+	};
+	self.setFeedbackDefinitions(feedbacks);
+};
+instance.prototype.feedback = function(feedback, bank) {
+	var un = feedback["options"]["un"]
+	if(imagelist[un] != null) {
+		uploadimg = imagelist[un]
+	}
+	else {
+		uploadimg = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+	}
+	var self = this;
+	return {
+		png64: uploadimg
+	};
+};
+setInterval(function() {
+	request.get('http://' + ipadr + ':4430/titan/handles', function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			var jsonobj = JSON.parse(Buffer.from(body).toString())
+			for (i = 0; i < jsonobj.length; i++) {
+				if(jsonobj[i]["icon"] != null) {
+					saveimage(jsonobj[i]["userNumber"]["hashCode"], jsonobj[i]["icon"])
+				}
+			}
+		}
+	});
+}, 5000);
+function saveimage(un, icon) {
+	request.get(icon, function (error2, response2, body2) {
+		if (!error2 && response2.statusCode == 200) {
+			imagelist[un] = Buffer.from(body2).toString('base64')
+		}
+	});
+}
 instance_skel.extendedBy(instance);
 exports = module.exports = instance;
