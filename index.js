@@ -292,7 +292,7 @@ class instance extends instance_skel {
 		if (this.config.IP !== undefined && uri !== undefined) {
 			var cmd = "http://" + this.config.IP + ":4430/titan/" + uri;
 
-			this.system.emit('rest_get', cmd, function (err, result) {
+			this.system.emit('rest_get', cmd, (err, result) => {
 				if (err !== null) {
 					this.status(this.STATUS_ERROR, result.error.code);
 					return false;
