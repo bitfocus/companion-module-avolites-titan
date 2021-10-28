@@ -1,7 +1,7 @@
 var instance_skel = require('../../instance_skel');
 
 /**
- * Companion instance class for Ross Video Xpression.
+ * Companion instance class for Avolites Titan.
  *
  * @extends instance_skel
  * @since 1.0.0
@@ -12,7 +12,7 @@ var instance_skel = require('../../instance_skel');
 class instance extends instance_skel {
 
 	/**
-	 * Create an instance of an Xpression module.
+	 * Create an instance of an Titan module.
 	 *
 	 * @param {EventEmitter} system - the brains of the operation
 	 * @param {string} id - the instance ID
