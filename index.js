@@ -1,7 +1,7 @@
 var instance_skel = require('../../instance_skel');
 
 /**
- * Companion instance class for Ross Video Xpression.
+ * Companion instance class for Avolites Titan.
  *
  * @extends instance_skel
  * @since 1.0.0
@@ -12,7 +12,7 @@ var instance_skel = require('../../instance_skel');
 class instance extends instance_skel {
 
 	/**
-	 * Create an instance of an Xpression module.
+	 * Create an instance of an Titan module.
 	 *
 	 * @param {EventEmitter} system - the brains of the operation
 	 * @param {string} id - the instance ID
@@ -75,6 +75,13 @@ class instance extends instance_skel {
 			max: 9999
 		};
 
+		this.FIELD_ALWAYSREFIRE = {
+			type: 'checkbox',
+			label: 'Always Refire',
+			id: 'refire',
+			default: true
+		}
+
 		this.actions(); // export actions
 		this.initFeedbacks();
 	}
@@ -93,19 +100,21 @@ class instance extends instance_skel {
 				label: 'Playback @ Percentage',
 				options: [
 					this.FIELD_USERNUMBER,
-					this.FIELD_PERCENTAGE
+					this.FIELD_PERCENTAGE,
+					this.FIELD_ALWAYSREFIRE
 				],
 				callback: (action) => {
 					var percentage = action.options.percentage;
 					percentage = percentage/100;
-					this.sendCommand("script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=" + action.options.un + "&level_level=" + percentage + "&alwaysRefire=true");
+					this.sendCommand("script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=" + action.options.un + "&level_level=" + percentage + "&alwaysRefire=" + action.options.refire ?? true);
 				}
 			},
 			'playbackFlash': {
 				label: 'Playback Flash',
 				options: [
 					this.FIELD_USERNUMBER,
-					this.FIELD_PLAYBACKACTION
+					this.FIELD_PLAYBACKACTION,
+					this.FIELD_ALWAYSREFIRE
 				],
 				callback: (action) => {
 					var percentage = "1";
@@ -113,7 +122,7 @@ class instance extends instance_skel {
 					{
 						percentage = "0";
 					}
-					this.sendCommand("script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=" + action.options.un + "&level_level=" + percentage + "&alwaysRefire=true");
+					this.sendCommand("script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=" + action.options.un + "&level_level=" + percentage + "&alwaysRefire=" + action.options.refire ?? true);
 				}
 			},
 			'playbackSwop': {
