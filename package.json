@@ -1,6 +1,6 @@
 {
 	"name": "avolites-titan",
-	"version": "1.2.0",
+	"version": "1.2.1",
 	"api_version": "1.0.0",
 	"description": "module for controlling avolites titan desks",
 	"main": "index.js",
