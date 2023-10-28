@@ -13,7 +13,7 @@ const rest_client = rest_pkg.Client
  * @author Nijs Jonas
  * @author yyy898
  * @author Keith Rocheck <keith.rocheck@gmail.com>
- * @author Joshua Hornig
+ * @author Joshua Hornig <joshua.hornig@outlook.de>
  */
 class instance extends InstanceBase {
   /**
@@ -91,16 +91,17 @@ class instance extends InstanceBase {
           )
         }
       },
+      /*API Call currently not working
       macroExecute: {
         name: 'Macro Execute',
         options: [this.FIELD_USERNUMBER ],
         callback: async action => {
           this.sendCommand(
-            'script/2/Macros/BeginRun?macroId=' +
-            action.options.un
+            'script/2/Macros/Run?macroid=' +
+              action.options.un 
           )
         }
-      },
+      },*/
       cuelistGo: {
         name: 'Cuelist GO / BACK',
         options: [this.FIELD_USERNUMBER, this.FIELD_CLACTION],
