@@ -1,0 +1,30 @@
+{
+	"id": "avolites-titan",
+	"name": "avolites-titan",
+	"shortname": "Titan",
+	"description": "A module for controlling Avolites Titan lighting consoles",
+	"version": "0.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-avolites-titan",
+	"bugs": "https://github.com/bitfocus/companion-module-avolites-titan/issues",
+	"maintainers": [
+		{
+			"name": "Nijs Jonas",
+			"email": ""
+		}
+	],
+	"legacyIds": [],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../index.js"
+	},
+	"manufacturer": "Avolites",
+	"products": [
+		"Titan"
+	],
+	"keywords": [
+		"Lighting"
+	]
+}
