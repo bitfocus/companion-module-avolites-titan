@@ -4,9 +4,12 @@ import { UpdateVariableDefinitions } from './variables.js'
 import { getUpgradeScripts } from './upgrades.js'
 import { UpdateActions } from './actions.js'
 import { UpdateFeedbacks } from './feedbacks.js'
+import { Handle } from './Interfaces/Handle.js'
+import { UpdatePresets } from './presets.js'
 
 export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	config!: ModuleConfig // Setup in init()
+	handles: Handle[] = []
 	imageList: { [key: string]: string } = {}
 	pollInterval: NodeJS.Timeout | null = null
 
@@ -18,6 +21,8 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		this.config = config
 
 		this.updateStatus(InstanceStatus.Ok)
+
+		await this.configUpdated(config)
 
 		this.updateActions() // export actions
 		this.updateFeedbacks() // export feedbacks
@@ -36,6 +41,10 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		}
 
 		await this.sendCommand('get/System/SoftwareVersion')
+		this.handles = await this.getInfo('handles')
+
+		this.log('debug', JSON.stringify(this.handles))
+		this.updatePresets()
 	}
 
 	// Return config fields for web config
@@ -51,8 +60,39 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		UpdateFeedbacks(this)
 	}
 
+	updatePresets(): void {
+		UpdatePresets(this)
+	}
+
 	updateVariableDefinitions(): void {
 		UpdateVariableDefinitions(this)
+	}
+
+	async getInfo(path: string): Promise<any> {
+		this.log('debug', 'test')
+		if (this.config.host !== undefined && path !== undefined) {
+			const fullUrl = `http://${this.config.host}:4430/titan/${path}`
+
+			this.log('debug', fullUrl)
+
+			try {
+				const response = await fetch(fullUrl)
+				if (!response.ok) {
+					this.updateStatus(InstanceStatus.ConnectionFailure, `Response code: ${response.status}`)
+					return null
+				} else {
+					this.updateStatus(InstanceStatus.Ok)
+
+					return await response.json()
+				}
+			} catch {
+				this.updateStatus(InstanceStatus.ConnectionFailure)
+			}
+		} else {
+			this.updateStatus(InstanceStatus.BadConfig)
+		}
+
+		return null
 	}
 
 	async sendCommand(path: string): Promise<boolean> {
