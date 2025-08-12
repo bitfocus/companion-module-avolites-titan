@@ -25,6 +25,23 @@ export const FIELD_CUENUMBER: CompanionInputFieldNumber = {
 	max: 9999,
 }
 
+export const FIELD_FADETIME: CompanionInputFieldNumber = {
+	type: 'number',
+	label: 'FadeTime',
+	id: 'ft',
+	default: 0,
+	min: 0,
+	max: 9999,
+	tooltip: "Will be ignored if 'Use master fade time' is ticked",
+}
+
+export const FIELD_USERMASTERFADETIME: CompanionInputFieldCheckbox = {
+	type: 'checkbox',
+	label: 'Use master fade time',
+	id: 'masterft',
+	default: true,
+}
+
 export const FIELD_PERCENTAGE: CompanionInputFieldNumber = {
 	type: 'number',
 	label: 'Percentage (0->100)',
@@ -119,6 +136,24 @@ export function UpdateActions(self: ModuleInstance): void {
 				if (success) {
 					await self.sendCommand(`script/2/CueLists/Play?handle_userNumber=${action.options.un}`)
 				}
+			},
+		},
+		releasePlayback: {
+			name: 'Release playback',
+			options: [FIELD_USERNUMBER, FIELD_FADETIME, FIELD_USERMASTERFADETIME],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Playbacks/ReleasePlayback?handle_userNumber=${action.options.un}&fadeTime=${action.options.ft}&useMasterReleaseTime=${action.options.masterft}`,
+				)
+			},
+		},
+		releaseAllPlaybacks: {
+			name: 'Release all playbacks',
+			options: [FIELD_FADETIME, FIELD_USERMASTERFADETIME],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Playbacks/ReleaseAllPlaybacks?fadeTime=${action.options.ft}&useMasterReleaseTime=${action.options.masterft}`,
+				)
 			},
 		},
 	})
