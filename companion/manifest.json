@@ -3,7 +3,7 @@
 	"name": "avolites-titan",
 	"shortname": "titan",
 	"description": "Module for controlling avolites titan desks",
-	"version": "2.1.0",
+	"version": "2.2.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-avolites-titan.git",
 	"bugs": "https://github.com/bitfocus/companion-module-avolites-titan/issues",

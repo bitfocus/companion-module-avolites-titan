@@ -78,6 +78,14 @@ export const FIELD_ALWAYSREFIRE: CompanionInputFieldCheckbox = {
 	default: true,
 }
 
+export const FIELD_BOSTATE: CompanionInputFieldCheckbox = {
+	type: 'checkbox',
+	label: 'Blackout state',
+	tooltip: 'If checked blackout will be enabled',
+	id: 'bo',
+	default: true,
+}
+
 export function UpdateActions(self: ModuleInstance): void {
 	self.setActionDefinitions({
 		playbackAtPercentage: {
@@ -154,6 +162,30 @@ export function UpdateActions(self: ModuleInstance): void {
 				await self.sendCommand(
 					`script/2/Playbacks/ReleaseAllPlaybacks?fadeTime=${action.options.ft}&useMasterReleaseTime=${action.options.masterft}`,
 				)
+			},
+		},
+		startMacro: {
+			name: 'Start macro',
+			options: [FIELD_USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/UserMacros/StartMacro?handle_userNumber=${action.options.un}`)
+			},
+		},
+		blackoutDesk: {
+			name: 'Blackout desk',
+			options: [FIELD_BOSTATE],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Masters/BlackOutDesk?deskBlackOutState=${action.options.bo}`)
+			},
+		},
+		setGrandMasterFaderLevel: {
+			name: 'Set grand master fader level',
+			options: [FIELD_PERCENTAGE],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Masters/SetGrandMasterFaderLevel?oldValue={}&value={${action.options.percentage}}`,
+				)
+				console.log(`script/2/Masters/SetGrandMasterFaderLevel?oldValue={}&value={${action.options.percentage}}`)
 			},
 		},
 	})
