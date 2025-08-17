@@ -25,6 +25,23 @@ export const FIELD_CUENUMBER: CompanionInputFieldNumber = {
 	max: 9999,
 }
 
+export const FIELD_FADETIME: CompanionInputFieldNumber = {
+	type: 'number',
+	label: 'FadeTime',
+	id: 'ft',
+	default: 0,
+	min: 0,
+	max: 9999,
+	tooltip: "Will be ignored if 'Use master fade time' is ticked",
+}
+
+export const FIELD_USERMASTERFADETIME: CompanionInputFieldCheckbox = {
+	type: 'checkbox',
+	label: 'Use master fade time',
+	id: 'masterft',
+	default: true,
+}
+
 export const FIELD_PERCENTAGE: CompanionInputFieldNumber = {
 	type: 'number',
 	label: 'Percentage (0->100)',
@@ -58,6 +75,14 @@ export const FIELD_ALWAYSREFIRE: CompanionInputFieldCheckbox = {
 	type: 'checkbox',
 	label: 'Always Refire',
 	id: 'refire',
+	default: true,
+}
+
+export const FIELD_BOSTATE: CompanionInputFieldCheckbox = {
+	type: 'checkbox',
+	label: 'Blackout state',
+	tooltip: 'If checked blackout will be enabled',
+	id: 'bo',
 	default: true,
 }
 
@@ -119,6 +144,48 @@ export function UpdateActions(self: ModuleInstance): void {
 				if (success) {
 					await self.sendCommand(`script/2/CueLists/Play?handle_userNumber=${action.options.un}`)
 				}
+			},
+		},
+		releasePlayback: {
+			name: 'Release playback',
+			options: [FIELD_USERNUMBER, FIELD_FADETIME, FIELD_USERMASTERFADETIME],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Playbacks/ReleasePlayback?handle_userNumber=${action.options.un}&fadeTime=${action.options.ft}&useMasterReleaseTime=${action.options.masterft}`,
+				)
+			},
+		},
+		releaseAllPlaybacks: {
+			name: 'Release all playbacks',
+			options: [FIELD_FADETIME, FIELD_USERMASTERFADETIME],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Playbacks/ReleaseAllPlaybacks?fadeTime=${action.options.ft}&useMasterReleaseTime=${action.options.masterft}`,
+				)
+			},
+		},
+		startMacro: {
+			name: 'Start macro',
+			options: [FIELD_USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/UserMacros/StartMacro?handle_userNumber=${action.options.un}`)
+			},
+		},
+		blackoutDesk: {
+			name: 'Blackout desk',
+			options: [FIELD_BOSTATE],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Masters/BlackOutDesk?deskBlackOutState=${action.options.bo}`)
+			},
+		},
+		setGrandMasterFaderLevel: {
+			name: 'Set grand master fader level',
+			options: [FIELD_PERCENTAGE],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Masters/SetGrandMasterFaderLevel?oldValue={}&value={${action.options.percentage}}`,
+				)
+				console.log(`script/2/Masters/SetGrandMasterFaderLevel?oldValue={}&value={${action.options.percentage}}`)
 			},
 		},
 	})
