@@ -79,11 +79,11 @@ export function UpdateActions(self: ModuleInstance): void {
 				)
 			},
 		},
-		startMacro: {
-			name: 'Start macro',
+		recallMacro: {
+			name: 'Recall macro',
 			options: [fields.USERNUMBER],
 			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/UserMacros/StartMacro?handle_userNumber=${action.options.un}`)
+				await self.sendCommand(`script/2/UserMacros/RecallMacro?handle_userNumber=${action.options.un}`)
 			},
 		},
 		blackoutDesk: {
