@@ -61,6 +61,13 @@ export function UpdateActions(self: ModuleInstance): void {
 				}
 			},
 		},
+		cuelistAdvDecrNextStep: {
+			name: 'Cuelist advance/decrement next step',
+			options: [fields.USERNUMBER, fields.ADV_DECR],
+			callback: async (action) => {
+				await self.sendCommand(`script/2/CueLists/${action.options.adv_decr}?handle_userNumber=${action.options.un}`)
+			},
+		},
 		releasePlayback: {
 			name: 'Release playback',
 			options: [fields.USERNUMBER, fields.FADETIME, fields.USERMASTERFADETIME],

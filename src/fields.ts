@@ -84,3 +84,13 @@ export const BOSTATE: CompanionInputFieldCheckbox = {
 	id: 'bo',
 	default: true,
 }
+export const ADV_DECR: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'Action',
+	id: 'adv_decr',
+	default: 'AdvanceNextStep',
+	choices: [
+		{ label: 'Next', id: 'AdvanceNextStep' },
+		{ label: 'Previous', id: 'DecrementNextStep' },
+	],
+}
