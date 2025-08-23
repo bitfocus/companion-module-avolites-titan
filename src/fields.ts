@@ -84,6 +84,15 @@ export const BOSTATE: CompanionInputFieldCheckbox = {
 	id: 'bo',
 	default: true,
 }
+
+export const AUTOFIRE: CompanionInputFieldCheckbox = {
+	type: 'checkbox',
+	label: 'Fire next cue automatically',
+	tooltip: 'If checked the next cue will be selected then fired',
+	id: 'af',
+	default: true,
+}
+
 export const ADV_DECR: CompanionInputFieldDropdown = {
 	type: 'dropdown',
 	label: 'Action',

@@ -48,16 +48,18 @@ export function UpdateActions(self: ModuleInstance): void {
 				await self.sendCommand('script/2/CueLists/' + cuelistaction + '?handle_userNumber=' + action.options.un)
 			},
 		},
-		cuelistGoto: {
-			name: 'Cuelist Go to cue',
-			options: [fields.USERNUMBER, fields.CUENUMBER],
+		cuelistSetNextCue: {
+			name: 'Cuelist set next cue',
+			options: [fields.USERNUMBER, fields.CUENUMBER, fields.AUTOFIRE],
 			callback: async (action) => {
 				const success = await self.sendCommand(
 					`script/2/CueLists/SetNextCue?handle_userNumber=${action.options.un}&stepNumber=${action.options.cn}`,
 				)
 
 				if (success) {
-					await self.sendCommand(`script/2/CueLists/Play?handle_userNumber=${action.options.un}`)
+					if (action.options.af) {
+						await self.sendCommand(`script/2/CueLists/Play?handle_userNumber=${action.options.un}`)
+					}
 				}
 			},
 		},
