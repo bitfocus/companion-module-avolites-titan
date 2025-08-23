@@ -30,7 +30,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	}
 	// When module gets deleted
 	async destroy(): Promise<void> {
-		this.log('debug', 'destroy')
+		this.log('debug', 'Module destroyed.')
 	}
 
 	async configUpdated(config: ModuleConfig): Promise<void> {
@@ -69,7 +69,6 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	}
 
 	async getInfo(path: string): Promise<any> {
-		this.log('debug', 'test')
 		if (this.config.host !== undefined && path !== undefined) {
 			const fullUrl = `http://${this.config.host}:4430/titan/${path}`
 
@@ -98,6 +97,8 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 	async sendCommand(path: string): Promise<boolean> {
 		if (this.config.host !== undefined && path !== undefined) {
 			const fullUrl = `http://${this.config.host}:4430/titan/${path}`
+
+			console.log('requested URL', fullUrl)
 
 			try {
 				const response = await fetch(fullUrl)

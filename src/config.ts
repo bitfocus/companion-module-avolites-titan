@@ -13,7 +13,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			width: 12,
 			label: 'Information',
 			value:
-				'This module comunicates to avolites titan desks thru the webapi protocol, the desk needs to be running version 10.0 or higher for this to work, some features might only work with higher software versions so make sure your avolites desk is always up to date',
+				"This module comunicates with Avolites Titan through it's HTTP WebAPI. The desk needs to be running version 14.0 or higher for the module to fully work.",
 		},
 		{
 			type: 'textinput',

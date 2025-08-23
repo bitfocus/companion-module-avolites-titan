@@ -1,5 +1,5 @@
 import type { ModuleInstance } from './main.js'
-import { FIELD_USERNUMBER } from './actions.js'
+import { USERNUMBER } from './fields.js'
 
 export function UpdateFeedbacks(self: ModuleInstance): void {
 	self.setFeedbackDefinitions({
@@ -7,7 +7,7 @@ export function UpdateFeedbacks(self: ModuleInstance): void {
 			type: 'advanced',
 			name: 'Get picture legend of playback',
 			description: 'Updates the keys image to the image on your console',
-			options: [FIELD_USERNUMBER],
+			options: [USERNUMBER],
 			callback: (feedback) => {
 				if (self.imageList[feedback.options.un as any] !== undefined) {
 					return {
