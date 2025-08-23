@@ -8,6 +8,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			options: [fields.USERNUMBER, fields.PERCENTAGE, fields.ALWAYSREFIRE],
 			callback: async (action): Promise<void> => {
 				const percentage = action.options.percentage ?? 100 / 100
+
 				await self.sendCommand(
 					`script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=${action.options.un}&level_level=${percentage}&alwaysRefire=${action.options.refire ?? true}`,
 				)
@@ -17,10 +18,8 @@ export function UpdateActions(self: ModuleInstance): void {
 			name: 'Playback Flash',
 			options: [fields.USERNUMBER, fields.PLAYBACKACTION, fields.ALWAYSREFIRE],
 			callback: async (action) => {
-				let percentage = '1'
-				if (action.options.playbackaction == '1') {
-					percentage = '0'
-				}
+				const percentage = action.options.playbackaction == 'on' ? '1' : '0'
+
 				await self.sendCommand(
 					`script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=${action.options.un}&level_level=${percentage}&alwaysRefire=${action.options.refire ?? true}`,
 				)
@@ -30,22 +29,18 @@ export function UpdateActions(self: ModuleInstance): void {
 			name: 'Playback Swop',
 			options: [fields.USERNUMBER, fields.PLAYBACKACTION],
 			callback: async (action) => {
-				let playbackaction = 'SwopPlayback'
-				if (action.options.playbackaction == '1') {
-					playbackaction = 'ClearSwopPlayback'
-				}
-				await self.sendCommand(`script/2/Playbacks/${playbackaction}?handle_userNumber=${action.options.un}`)
+				const command = action.options.playbackaction == 'on' ? 'SwopPlayback' : 'ClearSwopPlayback'
+
+				await self.sendCommand(`script/2/Playbacks/${command}?handle_userNumber=${action.options.un}`)
 			},
 		},
 		cuelistGo: {
 			name: 'Cuelist GO / BACK',
 			options: [fields.USERNUMBER, fields.CLACTION],
 			callback: async (action) => {
-				let cuelistaction = 'Play'
-				if (action.options.cuelistaction == '1') {
-					cuelistaction = 'GoBack'
-				}
-				await self.sendCommand('script/2/CueLists/' + cuelistaction + '?handle_userNumber=' + action.options.un)
+				await self.sendCommand(
+					'script/2/CueLists/' + action.options.cuelistaction + '?handle_userNumber=' + action.options.un,
+				)
 			},
 		},
 		cuelistSetNextCue: {
@@ -107,7 +102,6 @@ export function UpdateActions(self: ModuleInstance): void {
 			options: [fields.PERCENTAGE],
 			callback: async (action): Promise<void> => {
 				await self.sendCommand(`script/2/Masters/SetGrandMasterFaderLevel?oldValue=&value=${action.options.percentage}`)
-				console.log(`script/2/Masters/SetGrandMasterFaderLevel?oldValue=&value=${action.options.percentage}`)
 			},
 		},
 	})

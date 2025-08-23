@@ -8,10 +8,10 @@ export const CLACTION: CompanionInputFieldDropdown = {
 	type: 'dropdown',
 	label: 'Action',
 	id: 'cuelistaction',
-	default: '0',
+	default: 'Play',
 	choices: [
-		{ label: 'GO', id: '0' },
-		{ label: 'GO BACK', id: '1' },
+		{ label: 'Go', id: 'Play' },
+		{ label: 'Go Back', id: 'GoBack' },
 	],
 }
 
@@ -52,12 +52,12 @@ export const PERCENTAGE: CompanionInputFieldNumber = {
 
 export const PLAYBACKACTION: CompanionInputFieldDropdown = {
 	type: 'dropdown',
-	label: 'ON/OFF',
+	label: 'On/Off',
 	id: 'playbackaction',
-	default: '0',
+	default: 'on',
 	choices: [
-		{ label: 'ON', id: '0' },
-		{ label: 'OFF', id: '1' },
+		{ label: 'On', id: 'on' },
+		{ label: 'Off', id: 'off' },
 	],
 }
 

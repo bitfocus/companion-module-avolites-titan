@@ -98,6 +98,8 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 		if (this.config.host !== undefined && path !== undefined) {
 			const fullUrl = `http://${this.config.host}:4430/titan/${path}`
 
+			console.log('requested URL', fullUrl)
+
 			try {
 				const response = await fetch(fullUrl)
 				if (!response.ok) {
