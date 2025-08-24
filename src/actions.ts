@@ -104,5 +104,12 @@ export function UpdateActions(self: ModuleInstance): void {
 				await self.sendCommand(`script/2/Masters/SetGrandMasterFaderLevel?oldValue=&value=${action.options.percentage}`)
 			},
 		},
+		tapTempo: {
+			name: 'Tap tempo',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Masters/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
+			},
+		},
 	})
 }
