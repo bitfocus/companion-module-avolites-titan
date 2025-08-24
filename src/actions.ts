@@ -111,5 +111,48 @@ export function UpdateActions(self: ModuleInstance): void {
 				await self.sendCommand(`script/2/Masters/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
 			},
 		},
+		timelinePlay: {
+			name: 'Timeline - Play',
+			options: [fields.USERNUMBER, fields.RESETIFPLAYING],
+			callback: async (action): Promise<void> => {
+				const command = action.options.resetifplaying ? 'PlayResetTimeline' : 'PlayTimeline'
+				await self.sendCommand(`script/2/Timelines/${command}?handle_userNumber=${action.options.un}`)
+			},
+		},
+		timelinePause: {
+			name: 'Timeline - Pause',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/PauseTimeline?handle_userNumber=${action.options.un}`)
+			},
+		},
+		timelineReset: {
+			name: 'Timeline - Reset',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/ResetTimeline?handle_userNumber=${action.options.un}`)
+			},
+		},
+		timelineStop: {
+			name: 'Timeline - Stop',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/StopTimeline?handle_userNumber=${action.options.un}`)
+			},
+		},
+		timelineRelease: {
+			name: 'Timeline - Release',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/ReleaseTimeline?handle_userNumber=${action.options.un}`)
+			},
+		},
+		timelineReleaseAll: {
+			name: 'Timeline - Release all',
+			options: [fields.USERNUMBER],
+			callback: async (): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/ReleaseAllTimelines`)
+			},
+		},
 	})
 }

@@ -103,3 +103,11 @@ export const ADV_DECR: CompanionInputFieldDropdown = {
 		{ label: 'Previous', id: 'DecrementNextStep' },
 	],
 }
+
+export const RESETIFPLAYING: CompanionInputFieldCheckbox = {
+	type: 'checkbox',
+	label: 'Reset if playing',
+	tooltip: 'If checked the timeline will be reset if it is already playing',
+	id: 'resetifplaying',
+	default: true,
+}
