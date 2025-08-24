@@ -2,6 +2,7 @@ import {
 	CompanionInputFieldCheckbox,
 	CompanionInputFieldDropdown,
 	CompanionInputFieldNumber,
+	CompanionInputFieldTextInput,
 } from '@companion-module/base'
 
 export const CLACTION: CompanionInputFieldDropdown = {
@@ -17,7 +18,7 @@ export const CLACTION: CompanionInputFieldDropdown = {
 
 export const CUENUMBER: CompanionInputFieldNumber = {
 	type: 'number',
-	label: 'CueNumber',
+	label: 'Cue number',
 	id: 'cn',
 	default: 1,
 	min: 1,
@@ -26,7 +27,7 @@ export const CUENUMBER: CompanionInputFieldNumber = {
 
 export const FADETIME: CompanionInputFieldNumber = {
 	type: 'number',
-	label: 'FadeTime',
+	label: 'Fade time',
 	id: 'ft',
 	default: 0,
 	min: 0,
@@ -50,10 +51,10 @@ export const PERCENTAGE: CompanionInputFieldNumber = {
 	max: 100,
 }
 
-export const PLAYBACKACTION: CompanionInputFieldDropdown = {
+export const ONOFF: CompanionInputFieldDropdown = {
 	type: 'dropdown',
 	label: 'On/Off',
-	id: 'playbackaction',
+	id: 'onoff',
 	default: 'on',
 	choices: [
 		{ label: 'On', id: 'on' },
@@ -63,7 +64,7 @@ export const PLAYBACKACTION: CompanionInputFieldDropdown = {
 
 export const USERNUMBER: CompanionInputFieldNumber = {
 	type: 'number',
-	label: 'UserNumber',
+	label: 'User number',
 	id: 'un',
 	default: 1,
 	min: 1,
@@ -77,12 +78,16 @@ export const ALWAYSREFIRE: CompanionInputFieldCheckbox = {
 	default: true,
 }
 
-export const BOSTATE: CompanionInputFieldCheckbox = {
-	type: 'checkbox',
+export const BOSTATE: CompanionInputFieldDropdown = {
+	type: 'dropdown',
 	label: 'Blackout state',
 	tooltip: 'If checked blackout will be enabled',
 	id: 'bo',
-	default: true,
+	default: 'true',
+	choices: [
+		{ label: 'Enable', id: 'true' },
+		{ label: 'Disable', id: 'false' },
+	],
 }
 
 export const AUTOFIRE: CompanionInputFieldCheckbox = {
@@ -110,4 +115,77 @@ export const RESETIFPLAYING: CompanionInputFieldCheckbox = {
 	tooltip: 'If checked the timeline will be reset if it is already playing',
 	id: 'resetifplaying',
 	default: true,
+}
+
+export const PASSWORD: CompanionInputFieldTextInput = {
+	type: 'textinput',
+	label: 'Password',
+	id: 'password',
+	default: '1234',
+	tooltip: 'Master password is 68340. Use it if you want the unlock to work all the time.',
+}
+
+export const LOCK_ACTION: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'Lock action',
+	id: 'lock_action',
+	default: 'LockConsole',
+	choices: [
+		{ label: 'Lock', id: 'LockConsole' },
+		{ label: 'Unlock', id: 'UnlockConsole' },
+	],
+}
+
+export const TIMELINE_ACTION: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'Action',
+	id: 'timeline_action',
+	default: 'PlayTimeline',
+	choices: [
+		{ label: 'Play', id: 'PlayTimeline' },
+		{ label: 'Play (reset)', id: 'PlayResetTimeline' },
+		{ label: 'Pause', id: 'PauseTimeline' },
+		{ label: 'Reset', id: 'ResetTimeline' },
+		{ label: 'Stop', id: 'StopTimeline' },
+		{ label: 'Release', id: 'ReleaseTimeline' },
+	],
+}
+
+export const TIMECODE_SELECT: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'Select',
+	id: 'tc_select',
+	default: 'TimecodeOne',
+	choices: [
+		{ label: 'Timecode One', id: 'TimecodeOne' },
+		{ label: 'Timecode Two', id: 'TimecodeTwo' },
+		{ label: 'Timecode Three', id: 'TimecodeThree' },
+		{ label: 'Timecode Four', id: 'TimecodeFour' },
+	],
+}
+
+export const TIMECODE_ACTION: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'Action',
+	id: 'tc_action',
+	default: 'Play',
+	choices: [
+		{ label: 'Play', id: 'Play' },
+		{ label: 'Pause', id: 'Pause' },
+		{ label: 'Reset', id: 'Reset' },
+	],
+}
+
+export const TIMECODE_SOURCE: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'Timecode Source',
+	id: 'tc_source',
+	default: 'Internal',
+	choices: [
+		{ label: 'Internal', id: 'Internal' },
+		{ label: 'MIDI', id: 'UsbExpert' },
+		{ label: 'Winamp', id: 'Winamp' },
+		{ label: 'Clock', id: 'System' },
+		{ label: 'SMPTE', id: 'Smpte' },
+	],
 }

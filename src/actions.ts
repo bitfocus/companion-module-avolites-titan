@@ -16,9 +16,9 @@ export function UpdateActions(self: ModuleInstance): void {
 		},
 		playbackFlash: {
 			name: 'Playback Flash',
-			options: [fields.USERNUMBER, fields.PLAYBACKACTION, fields.ALWAYSREFIRE],
+			options: [fields.USERNUMBER, fields.ONOFF, fields.ALWAYSREFIRE],
 			callback: async (action) => {
-				const percentage = action.options.playbackaction == 'on' ? '1' : '0'
+				const percentage = action.options.onoff == 'on' ? '1' : '0'
 
 				await self.sendCommand(
 					`script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=${action.options.un}&level_level=${percentage}&alwaysRefire=${action.options.refire ?? true}`,
@@ -27,9 +27,9 @@ export function UpdateActions(self: ModuleInstance): void {
 		},
 		playbackSwop: {
 			name: 'Playback Swop',
-			options: [fields.USERNUMBER, fields.PLAYBACKACTION],
+			options: [fields.USERNUMBER, fields.ONOFF],
 			callback: async (action) => {
-				const command = action.options.playbackaction == 'on' ? 'SwopPlayback' : 'ClearSwopPlayback'
+				const command = action.options.onoff == 'on' ? 'SwopPlayback' : 'ClearSwopPlayback'
 
 				await self.sendCommand(`script/2/Playbacks/${command}?handle_userNumber=${action.options.un}`)
 			},
@@ -111,40 +111,13 @@ export function UpdateActions(self: ModuleInstance): void {
 				await self.sendCommand(`script/2/Masters/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
 			},
 		},
-		timelinePlay: {
-			name: 'Timeline - Play',
-			options: [fields.USERNUMBER, fields.RESETIFPLAYING],
+		timelineControl: {
+			name: 'Timeline control',
+			options: [fields.USERNUMBER, fields.TIMELINE_ACTION],
 			callback: async (action): Promise<void> => {
-				const command = action.options.resetifplaying ? 'PlayResetTimeline' : 'PlayTimeline'
-				await self.sendCommand(`script/2/Timelines/${command}?handle_userNumber=${action.options.un}`)
-			},
-		},
-		timelinePause: {
-			name: 'Timeline - Pause',
-			options: [fields.USERNUMBER],
-			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/Timelines/PauseTimeline?handle_userNumber=${action.options.un}`)
-			},
-		},
-		timelineReset: {
-			name: 'Timeline - Reset',
-			options: [fields.USERNUMBER],
-			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/Timelines/ResetTimeline?handle_userNumber=${action.options.un}`)
-			},
-		},
-		timelineStop: {
-			name: 'Timeline - Stop',
-			options: [fields.USERNUMBER],
-			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/Timelines/StopTimeline?handle_userNumber=${action.options.un}`)
-			},
-		},
-		timelineRelease: {
-			name: 'Timeline - Release',
-			options: [fields.USERNUMBER],
-			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/Timelines/ReleaseTimeline?handle_userNumber=${action.options.un}`)
+				await self.sendCommand(
+					`script/2/Timelines/${action.options.timeline_action}?handle_userNumber=${action.options.un}`,
+				)
 			},
 		},
 		timelineReleaseAll: {
@@ -152,6 +125,38 @@ export function UpdateActions(self: ModuleInstance): void {
 			options: [fields.USERNUMBER],
 			callback: async (): Promise<void> => {
 				await self.sendCommand(`script/2/Timelines/ReleaseAllTimelines`)
+			},
+		},
+		lockConsole: {
+			name: 'Lock / Unlock desk',
+			options: [fields.LOCK_ACTION, fields.PASSWORD],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/LockMode/${action.options.lock_action}?password=${action.options.password}`)
+			},
+		},
+		freezeDmx: {
+			name: 'Enable / Disable DMX Out',
+			options: [fields.ONOFF],
+			callback: async (action): Promise<void> => {
+				const command = action.options.onoff == 'on' ? 'true' : 'false'
+
+				await self.sendCommand(`script/2/Dmx/FreezeDmx?freeze=${command}`)
+			},
+		},
+		timecodeSource: {
+			name: 'Timecode - Set source',
+			options: [fields.TIMECODE_SELECT, fields.TIMECODE_SOURCE],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(
+					`script/2/Timecode/${action.options.tc_select}/SetSource?source=${action.options.tc_source}`,
+				)
+			},
+		},
+		timecodeAction: {
+			name: 'Timecode control',
+			options: [fields.TIMECODE_SELECT, fields.TIMECODE_ACTION],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timecode/${action.options.tc_select}/${action.options.tc_action}`)
 			},
 		},
 	})
