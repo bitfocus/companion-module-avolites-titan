@@ -62,6 +62,17 @@ export const ONOFF: CompanionInputFieldDropdown = {
 	],
 }
 
+export const ONOFFDMX: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'On/Off',
+	id: 'onoffdmx',
+	default: 'on',
+	choices: [
+		{ label: 'Disable DMX', id: 'on' },
+		{ label: 'Enable DMX', id: 'off' },
+	],
+}
+
 export const USERNUMBER: CompanionInputFieldNumber = {
 	type: 'number',
 	label: 'User number',

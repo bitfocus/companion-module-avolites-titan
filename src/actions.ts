@@ -136,9 +136,9 @@ export function UpdateActions(self: ModuleInstance): void {
 		},
 		freezeDmx: {
 			name: 'Enable / Disable DMX Out',
-			options: [fields.ONOFF],
+			options: [fields.ONOFFDMX],
 			callback: async (action): Promise<void> => {
-				const command = action.options.onoff == 'on' ? 'true' : 'false'
+				const command = action.options.onoffdmx == 'on' ? 'true' : 'false'
 
 				await self.sendCommand(`script/2/Dmx/FreezeDmx?freeze=${command}`)
 			},
