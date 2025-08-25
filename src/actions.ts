@@ -108,7 +108,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			name: 'Tap tempo',
 			options: [fields.USERNUMBER],
 			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/Masters/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
+				await self.sendCommand(`script/2/Playbacks/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
 			},
 		},
 		timelineControl: {
