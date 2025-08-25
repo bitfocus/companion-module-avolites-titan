@@ -62,6 +62,17 @@ export const ONOFF: CompanionInputFieldDropdown = {
 	],
 }
 
+export const ONOFFDMX: CompanionInputFieldDropdown = {
+	type: 'dropdown',
+	label: 'On/Off',
+	id: 'onoffdmx',
+	default: 'on',
+	choices: [
+		{ label: 'Disable DMX', id: 'on' },
+		{ label: 'Enable DMX', id: 'off' },
+	],
+}
+
 export const USERNUMBER: CompanionInputFieldNumber = {
 	type: 'number',
 	label: 'User number',
@@ -147,7 +158,6 @@ export const TIMELINE_ACTION: CompanionInputFieldDropdown = {
 		{ label: 'Pause', id: 'PauseTimeline' },
 		{ label: 'Reset', id: 'ResetTimeline' },
 		{ label: 'Stop', id: 'StopTimeline' },
-		{ label: 'Release', id: 'ReleaseTimeline' },
 	],
 }
 

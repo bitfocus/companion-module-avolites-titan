@@ -108,7 +108,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			name: 'Tap tempo',
 			options: [fields.USERNUMBER],
 			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/Masters/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
+				await self.sendCommand(`script/2/Playbacks/TapTempo?handle_userNumber=${action.options.un}&panelTimeStamp=`)
 			},
 		},
 		timelineControl: {
@@ -120,25 +120,25 @@ export function UpdateActions(self: ModuleInstance): void {
 				)
 			},
 		},
+		releaseTimeline: {
+			name: 'Release timeline',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/ReleaseTimeline?handle_userNumber=${action.options.un}`)
+			},
+		},
 		timelineReleaseAll: {
 			name: 'Timeline - Release all',
-			options: [fields.USERNUMBER],
+			options: [],
 			callback: async (): Promise<void> => {
 				await self.sendCommand(`script/2/Timelines/ReleaseAllTimelines`)
 			},
 		},
-		lockConsole: {
-			name: 'Lock / Unlock desk',
-			options: [fields.LOCK_ACTION, fields.PASSWORD],
-			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/LockMode/${action.options.lock_action}?password=${action.options.password}`)
-			},
-		},
 		freezeDmx: {
 			name: 'Enable / Disable DMX Out',
-			options: [fields.ONOFF],
+			options: [fields.ONOFFDMX],
 			callback: async (action): Promise<void> => {
-				const command = action.options.onoff == 'on' ? 'true' : 'false'
+				const command = action.options.onoffdmx == 'on' ? 'true' : 'false'
 
 				await self.sendCommand(`script/2/Dmx/FreezeDmx?freeze=${command}`)
 			},
