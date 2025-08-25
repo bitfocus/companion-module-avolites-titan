@@ -134,13 +134,6 @@ export function UpdateActions(self: ModuleInstance): void {
 				await self.sendCommand(`script/2/Timelines/ReleaseAllTimelines`)
 			},
 		},
-		lockConsole: {
-			name: 'Lock / Unlock desk',
-			options: [fields.LOCK_ACTION, fields.PASSWORD],
-			callback: async (action): Promise<void> => {
-				await self.sendCommand(`script/2/LockMode/${action.options.lock_action}?password=${action.options.password}`)
-			},
-		},
 		freezeDmx: {
 			name: 'Enable / Disable DMX Out',
 			options: [fields.ONOFF],
