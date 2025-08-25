@@ -147,7 +147,6 @@ export const TIMELINE_ACTION: CompanionInputFieldDropdown = {
 		{ label: 'Pause', id: 'PauseTimeline' },
 		{ label: 'Reset', id: 'ResetTimeline' },
 		{ label: 'Stop', id: 'StopTimeline' },
-		{ label: 'Release', id: 'ReleaseTimeline' },
 	],
 }
 

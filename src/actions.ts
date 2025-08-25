@@ -120,6 +120,13 @@ export function UpdateActions(self: ModuleInstance): void {
 				)
 			},
 		},
+		releaseTimeline: {
+			name: 'Release timeline',
+			options: [fields.USERNUMBER],
+			callback: async (action): Promise<void> => {
+				await self.sendCommand(`script/2/Timelines/ReleaseTimeline?handle_userNumber=${action.options.un}`)
+			},
+		},
 		timelineReleaseAll: {
 			name: 'Timeline - Release all',
 			options: [fields.USERNUMBER],
