@@ -129,7 +129,7 @@ export function UpdateActions(self: ModuleInstance): void {
 		},
 		timelineReleaseAll: {
 			name: 'Timeline - Release all',
-			options: [fields.USERNUMBER],
+			options: [],
 			callback: async (): Promise<void> => {
 				await self.sendCommand(`script/2/Timelines/ReleaseAllTimelines`)
 			},
