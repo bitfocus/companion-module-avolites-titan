@@ -7,7 +7,7 @@ export function UpdateActions(self: ModuleInstance): void {
 			name: 'Playback @ Percentage',
 			options: [fields.USERNUMBER, fields.PERCENTAGE, fields.ALWAYSREFIRE],
 			callback: async (action): Promise<void> => {
-				const percentage = action.options.percentage ?? 100 / 100
+				const percentage = (action.options.percentage ?? 100) / 100
 
 				await self.sendCommand(
 					`script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=${action.options.un}&level_level=${percentage}&alwaysRefire=${action.options.refire ?? true}`,
