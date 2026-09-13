@@ -1,13 +1,15 @@
 import type { ModuleInstance } from './main.js'
 import * as fields from './fields.js'
+import { getCommonActions } from './actions/common.js'
 
 export function UpdateActions(self: ModuleInstance): void {
 	self.setActionDefinitions({
+		...getCommonActions(self),
 		playbackAtPercentage: {
 			name: 'Playback @ Percentage',
 			options: [fields.USERNUMBER, fields.PERCENTAGE, fields.ALWAYSREFIRE],
 			callback: async (action): Promise<void> => {
-				const percentage = action.options.percentage ?? 100 / 100
+				const percentage = Number(action.options.percentage ?? 100) / 100
 
 				await self.sendCommand(
 					`script/2/Playbacks/FirePlaybackAtLevel?handle_userNumber=${action.options.un}&level_level=${percentage}&alwaysRefire=${action.options.refire ?? true}`,
