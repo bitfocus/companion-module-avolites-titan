@@ -13,7 +13,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			width: 12,
 			label: 'Information',
 			value:
-				"This module comunicates with Avolites Titan through it's HTTP WebAPI. The desk needs to be running version 14.0 or higher for the module to fully work.",
+				'This module communicates with Titan using the HTTP WebAPI on port 4430. Original controls target Titan 14.0+. New common console controls are mapped against the 19.2 API; see the module help for availability and validation details.',
 		},
 		{
 			type: 'textinput',
@@ -21,6 +21,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			label: 'Target IP',
 			width: 8,
 			regex: Regex.IP,
+			default: '127.0.0.1',
 		},
 	]
 }

@@ -3,6 +3,7 @@ export interface Handle {
 	legend: string
 	titanId: number
 	userNumber: HandleUserNumber
+	icon?: string | null
 }
 
 export interface HandleUserNumber {
