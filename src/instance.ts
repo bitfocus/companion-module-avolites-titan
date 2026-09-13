@@ -74,7 +74,7 @@ export class ModuleInstance extends InstanceBase<ModuleConfig> {
 			this.updateStatus(InstanceStatus.BadConfig, 'Enter a target IP address')
 			return
 		}
-		const client = new TitanClient(config.host.trim())
+		const client = new TitanClient(config.host.trim(), config.port)
 		this.client = client
 		this.updateStatus(InstanceStatus.Connecting)
 		await this.refresh(client)
