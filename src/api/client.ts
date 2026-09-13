@@ -4,6 +4,7 @@ export class TitanClient {
 
 	constructor(
 		private readonly host: string,
+		private readonly port: number,
 		private readonly timeout = 5000,
 		private readonly fetcher: typeof fetch = fetch,
 	) {}
@@ -22,7 +23,7 @@ export class TitanClient {
 			this.timeout,
 		)
 		try {
-			const response = await this.fetcher(absolute ? path : `http://${this.host}:4430/titan/${path}`, {
+			const response = await this.fetcher(absolute ? path : `http://${this.host}:${this.port}/titan/${path}`, {
 				signal: request.signal,
 			})
 			if (!response.ok) {

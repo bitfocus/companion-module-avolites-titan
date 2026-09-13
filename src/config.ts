@@ -3,6 +3,7 @@ import { Regex, type SomeCompanionConfigField } from '@companion-module/base'
 export interface ModuleConfig {
 	info: string
 	host: string
+	port: number
 }
 
 export function GetConfigFields(): SomeCompanionConfigField[] {
@@ -13,7 +14,7 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			width: 12,
 			label: 'Information',
 			value:
-				'This module communicates with Titan using the HTTP WebAPI on port 4430. Original controls target Titan 14.0+. New common console controls are mapped against the 19.2 API; see the module help for availability and validation details.',
+				'This module communicates with Titan using the HTTP WebAPI. This WebAPI is available on consoles and on Titan PC with a T2 or above.',
 		},
 		{
 			type: 'textinput',
@@ -22,6 +23,18 @@ export function GetConfigFields(): SomeCompanionConfigField[] {
 			width: 8,
 			regex: Regex.IP,
 			default: '127.0.0.1',
+			required: true,
+		},
+		{
+			type: 'number',
+			id: 'port',
+			label: 'Target Port',
+			width: 4,
+			default: 4430,
+			min: 1,
+			max: 65535,
+			step: 1,
+			required: true,
 		},
 	]
 }

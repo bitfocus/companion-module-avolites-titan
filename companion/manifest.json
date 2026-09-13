@@ -3,7 +3,7 @@
 	"name": "avolites-titan",
 	"shortname": "titan",
 	"description": "Module for controlling Avolites Titan",
-	"version": "3.0.0",
+	"version": "3.1.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-avolites-titan.git",
 	"bugs": "https://github.com/bitfocus/companion-module-avolites-titan/issues",
