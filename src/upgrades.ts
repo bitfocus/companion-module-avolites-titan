@@ -22,7 +22,7 @@ const upgradeV2_0_0: CompanionStaticUpgradeScript<ModuleConfig> = (
 }
 
 export const getUpgradeScripts = (): CompanionStaticUpgradeScript<ModuleConfig>[] => {
-	return [upgradeV2_0_0, upgradeCueListPresets]
+	return [upgradeV2_0_0, upgradeCueListPresets, upgradeConfigPort]
 }
 
 // Repair saved buttons created by the old GO/BACK presets without changing IDs.
@@ -34,4 +34,12 @@ const upgradeCueListPresets: CompanionStaticUpgradeScript<ModuleConfig> = (_cont
 		action.options.cuelistaction = String(action.options.cuelistaction) === '0' ? 'Play' : 'GoBack'
 	}
 	return { updatedConfig: null, updatedActions, updatedFeedbacks: [] }
+}
+
+const upgradeConfigPort: CompanionStaticUpgradeScript<ModuleConfig> = (_context, props) => {
+	const config = props.config
+	if (config) {
+		config.port ??= 4430
+	}
+	return { updatedConfig: config, updatedActions: [], updatedFeedbacks: [] }
 }
