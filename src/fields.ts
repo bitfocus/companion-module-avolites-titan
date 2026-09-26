@@ -16,13 +16,13 @@ export const CLACTION: CompanionInputFieldDropdown = {
 	],
 }
 
-export const CUENUMBER: CompanionInputFieldNumber = {
-	type: 'number',
+export const CUENUMBER: CompanionInputFieldTextInput = {
+	type: 'textinput',
 	label: 'Cue number',
 	id: 'cn',
-	default: 1,
-	min: 1,
-	max: 9999,
+	default: '1',
+	useVariables: true,
+	tooltip: 'Cue number from 1 to 9999. Supports Companion variables, resolved when the action runs.',
 }
 
 export const FADETIME: CompanionInputFieldNumber = {

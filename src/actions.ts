@@ -1,6 +1,7 @@
 import type { ModuleInstance } from './main.js'
 import * as fields from './fields.js'
 import { getCommonActions } from './actions/common.js'
+import { finiteNumber } from './api/commands.js'
 
 export function UpdateActions(self: ModuleInstance): void {
 	self.setActionDefinitions({
@@ -48,9 +49,17 @@ export function UpdateActions(self: ModuleInstance): void {
 		cuelistSetNextCue: {
 			name: 'Cuelist set next cue',
 			options: [fields.USERNUMBER, fields.CUENUMBER, fields.AUTOFIRE],
-			callback: async (action) => {
+			callback: async (action, context) => {
+				let cueNumber: number
+				try {
+					const resolved = await context.parseVariablesInString(String(action.options.cn ?? ''))
+					cueNumber = finiteNumber(resolved, 1, 9999)
+				} catch (error) {
+					self.log('error', `Cuelist set next cue: ${error instanceof Error ? error.message : String(error)}`)
+					return
+				}
 				const success = await self.sendCommand(
-					`script/2/CueLists/SetNextCue?handle_userNumber=${action.options.un}&stepNumber=${action.options.cn}`,
+					`script/2/CueLists/SetNextCue?handle_userNumber=${action.options.un}&stepNumber=${cueNumber}`,
 				)
 
 				if (success) {
